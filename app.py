@@ -34,7 +34,11 @@ class VoiceRequest(BaseModel):
 # Endpoints
 @app.get("/")
 def read_root():
-    return FileResponse('static/index.html')
+    import os
+    file_path = os.path.join(os.path.dirname(__file__), "static", "index.html")
+    if not os.path.exists(file_path):
+        raise HTTPException(status_code=404, detail="Index file not found")
+    return FileResponse(file_path)
 
 @app.get("/health")
 def health_check():
@@ -79,4 +83,6 @@ async def detect_voice_file(file: UploadFile = File(...)):
         raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":
-    uvicorn.run("app:app", host="0.0.0.0", port=8001, reload=False)
+    import os
+    port = int(os.environ.get("PORT", 7860))
+    uvicorn.run("app:app", host="0.0.0.0", port=port, reload=False)
