@@ -207,6 +207,7 @@ HTML_CONTENT = """
                     <option value="hi">Hindi</option>
                     <option value="ta">Tamil</option>
                     <option value="te">Telugu</option>
+                    <option value="ml">Malayalam</option>
                 </select>
             </div>
 
